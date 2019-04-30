@@ -1,3 +1,5 @@
+import javafx.stage.FileChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +21,6 @@ class Directory {
     Directory() {
         fixed = false;
         path = "";
-
         dialogFrame = new JFrame("myDirectory");
         searchBtn = new JButton("Search");
         finishBtn = new JButton("Finish");
@@ -44,8 +45,6 @@ class Directory {
         dialogFrame.setMinimumSize(new Dimension(300, 90));
         dialogFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        fileChooserListener();
-
         panelButtons.setLayout(new FlowLayout());
         panelButtons.add(searchBtn);
         panelButtons.add(finishBtn);
@@ -56,8 +55,11 @@ class Directory {
         panel.add(pathFld);
         panel.add(panelButtons);
 
+        fileChooserListener();
+
         dialogFrame.add(panel);
         dialogFrame.setEnabled(true);
+        dialogFrame.isFocused();
         dialogFrame.setVisible(true);
     }
 
@@ -66,8 +68,11 @@ class Directory {
             public void actionPerformed(ActionEvent e) {
                 dirChooser.setName("myDirectoryNavigator");
                 dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                final File selectedFile = dirChooser.getCurrentDirectory();
-                path = selectedFile.getAbsolutePath().toString();
+                int result = dirChooser.showOpenDialog(dirChooser);
+
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    JOptionPane.showMessageDialog(dirChooser, dirChooser.getSelectedFile());
+                }
                 pathFld.setText(path);
             }
         });
@@ -76,7 +81,7 @@ class Directory {
             public void actionPerformed(ActionEvent e) {
                 if (!path.equals("")) {
                     fixed = true;
-                    System.exit(0);
+
                 } else {
                     pathFld.setText("Укажите перед выходом путь к файлу.");
                 }
