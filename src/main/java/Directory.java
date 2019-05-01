@@ -1,15 +1,13 @@
-import javafx.stage.FileChooser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
+/**
+ *
+ *  Окно выбора каталога.
+ */
 class Directory {
-    private String path;
-    private boolean fixed;
-
     private JFrame dialogFrame;
     private JButton searchBtn;
     private JButton finishBtn;
@@ -18,9 +16,10 @@ class Directory {
     private JPanel panelButtons;
     private JFileChooser dirChooser;
 
+    /*
+        constructor
+     */
     Directory() {
-        fixed = false;
-        path = "";
         dialogFrame = new JFrame("myDirectory");
         searchBtn = new JButton("Search");
         finishBtn = new JButton("Finish");
@@ -30,16 +29,12 @@ class Directory {
         dirChooser = new JFileChooser();
     }
 
-    public boolean isFixed() {
-        return fixed;
-    }
-
-    public void showDialog(Filesystem filesystem) {
+    /*
+        отображение окна выбора католога
+     */
+    public void createDirectory(Filesystem filesystem) {
         filesystem.setEnabled(false);
-        selectDir();
-    }
 
-    public void selectDir() {
         dialogFrame.setPreferredSize(new Dimension(300, 90));
         dialogFrame.setMinimumSize(new Dimension(300, 90));
         dialogFrame.setMinimumSize(new Dimension(300, 90));
@@ -55,15 +50,19 @@ class Directory {
         panel.add(pathFld);
         panel.add(panelButtons);
 
-        fileChooserListener();
-
         dialogFrame.add(panel);
         dialogFrame.setEnabled(true);
         dialogFrame.isFocused();
         dialogFrame.setVisible(true);
+
+        buttonClickListener();
     }
 
-    private void fileChooserListener() {
+    /*
+        ожидание нажати кнопок
+     */
+    private void buttonClickListener() {
+        // нажатие кнопки завершения
         searchBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dirChooser.setName("myDirectoryNavigator");
@@ -73,15 +72,15 @@ class Directory {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     JOptionPane.showMessageDialog(dirChooser, dirChooser.getSelectedFile());
                 }
-                pathFld.setText(path);
             }
         });
 
+        // нажатие кнопки выбора каталога
         finishBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!path.equals("")) {
-                    fixed = true;
-
+                if (dirChooser.getCurrentDirectory().toString() == "") {
+                    // TODO
+                    //  вывод окна выбора каталога
                 } else {
                     pathFld.setText("Укажите перед выходом путь к файлу.");
                 }
