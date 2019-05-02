@@ -1,19 +1,26 @@
+import javafx.stage.Screen;
+
 import java.awt.*;
 import javax.swing.*;
 
-class Interface extends JFrame{
+class UserInterface extends JFrame{
+
     /*
         constructor
      */
-    Interface() {
+    UserInterface() {
         super("myFileSystem");
 
         JTextArea textArea;
         JMenuBar menuBar;
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 
         setPreferredSize(new Dimension(600, 250));
         setMaximumSize(new Dimension(600, 200));
         setMinimumSize(new Dimension(600, 200));
+
+        setLocation(dimension.width / 2 - getPreferredSize().width / 2,
+                    dimension.height / 2 - getPreferredSize().height / 2);
 
         menuBar = new JMenuBar();
         textArea = new JTextArea();
@@ -28,7 +35,7 @@ class Interface extends JFrame{
     /*
         отображение главного окна приложения
      */
-    public void createEdit(JTextArea textArea) {
+    private void createEdit(JTextArea textArea) {
         try {
             textArea.setLineWrap(true);
             textArea.setWrapStyleWord(true);
@@ -42,23 +49,37 @@ class Interface extends JFrame{
     /*
         создание маню
      */
-    public void createMenu(JMenuBar menuBar) {
+    private void createMenu(JMenuBar menuBar) {
         JMenu menuFile;
+        JMenu menuEdit;
+        JMenu menuLog;
         JMenuItem fileOpen;
         JMenuItem fileClose;
-        JMenuItem fileEdit;
+        JMenuItem editSave;
+        JMenuItem editCancel;
+        JMenuItem logShow;
 
         try {
             menuFile = new JMenu("File");
             fileOpen = new JMenuItem("Open");
-            fileEdit = new JMenuItem("Edit");
             fileClose = new JMenuItem("Close");
 
-            setJMenuBar(menuBar);
-            menuBar.add(menuFile);
+            menuEdit = new JMenu("Edit");
+            editSave = new JMenuItem("Save");
+            editCancel = new JMenuItem("Cancel");
+
+            menuLog = new JMenu("Log");
+            logShow = new JMenuItem("Show");
+
             menuFile.add(fileOpen);
-            menuFile.add(fileEdit);
             menuFile.add(fileClose);
+            menuEdit.add(editSave);
+            menuEdit.add(editCancel);
+            menuLog.add(logShow);
+            menuBar.add(menuFile);
+            menuBar.add(menuEdit);
+            menuBar.add(menuLog);
+            setJMenuBar(menuBar);
         } catch (NullPointerException e) {
             System.out.println("-- Failed at menu bar creation --");
         }

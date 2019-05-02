@@ -1,17 +1,27 @@
-import java.awt.*;
-import javax.swing.*;
+import java.io.File;
 
 /**
  *
  *  Главное приложение.
  */
-public class Filesystem extends JFrame {
+public class Filesystem {
+    public File logFile;
+
+    /*
+        инициализация файловой системы
+     */
+    private static void createFilesystem(String directoryPath) {
+
+    }
 
     /*
         главный метод
      */
     public static void main(String[] args) {
-        new Interface();
-        new Directory();
+        UserInterface userInterface = new UserInterface();
+        UserDirectory userDirectory = new UserDirectory();
+
+        userDirectory.setUserDirectory(userInterface);
+        createFilesystem(userDirectory.getUserDirectory());
     }
 }
