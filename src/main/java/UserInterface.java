@@ -1,9 +1,17 @@
-import javafx.stage.Screen;
-
 import java.awt.*;
 import javax.swing.*;
 
 class UserInterface extends JFrame{
+    private JMenuBar _menuBar;
+    private JMenu _menuFile;
+    private JMenu _menuEdit;
+    private JMenu _menuLog;
+    private JMenuItem _fileOpen;
+    private JMenuItem _fileClose;
+    private JMenuItem _editSave;
+    private JMenuItem _editCancel;
+    private JMenuItem _logShow;
+    private JTextArea _textArea;
 
     /*
         constructor
@@ -11,8 +19,6 @@ class UserInterface extends JFrame{
     UserInterface() {
         super("myFileSystem");
 
-        JTextArea textArea;
-        JMenuBar menuBar;
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 
         setPreferredSize(new Dimension(600, 250));
@@ -22,25 +28,34 @@ class UserInterface extends JFrame{
         setLocation(dimension.width / 2 - getPreferredSize().width / 2,
                     dimension.height / 2 - getPreferredSize().height / 2);
 
-        menuBar = new JMenuBar();
-        textArea = new JTextArea();
+        _menuBar = new JMenuBar();
+        _textArea = new JTextArea();
 
-        createMenu(menuBar);
-        createEdit(textArea);
+        _createMenu();
+        _createEdit();
+
+        setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        _menuItemClickListener();
+    }
+
+    /*
+        Ожидание выбора элментов меню
+     */
+    public void _menuItemClickListener() {
+
     }
 
     /*
         отображение главного окна приложения
      */
-    private void createEdit(JTextArea textArea) {
+    private void _createEdit() {
         try {
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
+            _textArea.setLineWrap(true);
+            _textArea.setWrapStyleWord(true);
 
-            this.add(textArea);
+            this.add(_textArea);
         } catch (NullPointerException e) {
             System.out.println("-- Failed at text area creation --");
         }
@@ -49,37 +64,31 @@ class UserInterface extends JFrame{
     /*
         создание маню
      */
-    private void createMenu(JMenuBar menuBar) {
-        JMenu menuFile;
-        JMenu menuEdit;
-        JMenu menuLog;
-        JMenuItem fileOpen;
-        JMenuItem fileClose;
-        JMenuItem editSave;
-        JMenuItem editCancel;
-        JMenuItem logShow;
+    private void _createMenu() {
+
 
         try {
-            menuFile = new JMenu("File");
-            fileOpen = new JMenuItem("Open");
-            fileClose = new JMenuItem("Close");
+            _menuFile = new JMenu("File");
+            _fileOpen = new JMenuItem("Open");
+            _fileClose = new JMenuItem("Close");
 
-            menuEdit = new JMenu("Edit");
-            editSave = new JMenuItem("Save");
-            editCancel = new JMenuItem("Cancel");
+            _menuEdit = new JMenu("Edit");
+            _editSave = new JMenuItem("Save");
+            _editCancel = new JMenuItem("Cancel");
 
-            menuLog = new JMenu("Log");
-            logShow = new JMenuItem("Show");
+            _menuLog = new JMenu("Log");
+            _logShow = new JMenuItem("Show");
 
-            menuFile.add(fileOpen);
-            menuFile.add(fileClose);
-            menuEdit.add(editSave);
-            menuEdit.add(editCancel);
-            menuLog.add(logShow);
-            menuBar.add(menuFile);
-            menuBar.add(menuEdit);
-            menuBar.add(menuLog);
-            setJMenuBar(menuBar);
+            _menuFile.add(_fileOpen);
+            _menuFile.add(_fileClose);
+            _menuEdit.add(_editSave);
+            _menuEdit.add(_editCancel);
+            _menuLog.add(_logShow);
+
+            _menuBar.add(_menuFile);
+            _menuBar.add(_menuEdit);
+            _menuBar.add(_menuLog);
+            setJMenuBar(_menuBar);
         } catch (NullPointerException e) {
             System.out.println("-- Failed at menu bar creation --");
         }
