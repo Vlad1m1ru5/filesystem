@@ -23,7 +23,7 @@ class UserDirectory {
     UserDirectory() {
         _dialogFrame = new JFrame("myDirectory");
         _searchBtn = new JButton("Search");
-        _finishBtn = new JButton("Finish");
+        _finishBtn = new JButton("Confirm");
         _pathFld = new JTextField("", 125);
         _panel = new JPanel();
         _panelButtons = new JPanel();
@@ -68,30 +68,26 @@ class UserDirectory {
         userInterface.setEnabled(false);
 
         // нажатие кнопки выбора каталога
-        _searchBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                _dirChooser.setName("myDirectoryNavigator");
-                _dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int result = _dirChooser.showOpenDialog(_dirChooser);
+        _searchBtn.addActionListener(e -> {
+            _dirChooser.setName("myDirectoryNavigator");
+            _dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = _dirChooser.showOpenDialog(_dirChooser);
 
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    _directoryPath = _dirChooser.getSelectedFile().toString();
-                }
-                _pathFld.setText(_directoryPath);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                _directoryPath = _dirChooser.getSelectedFile().toString();
             }
+            _pathFld.setText(_directoryPath);
         });
 
         // нажатие кнопки завершения
-        _finishBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (!(_pathFld.getText().equals("") || _pathFld.getText().equals("Укажите путь к каталогу."))) {
-                    _dialogFrame.setEnabled(false);
-                    _dialogFrame.setVisible(false);
-                    userInterface.setEnabled(true);
-                    userInterface.setVisible(true);
-                } else {
-                    _pathFld.setText("Укажите путь к каталогу.");
-                }
+        _finishBtn.addActionListener(e -> {
+            if (!(_pathFld.getText().equals("") || _pathFld.getText().equals("Укажите путь к каталогу."))) {
+                _dialogFrame.setEnabled(false);
+                _dialogFrame.setVisible(false);
+                userInterface.setEnabled(true);
+                userInterface.setVisible(true);
+            } else {
+                _pathFld.setText("Укажите путь к каталогу.");
             }
         });
     }
