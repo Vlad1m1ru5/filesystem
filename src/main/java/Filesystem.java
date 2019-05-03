@@ -1,11 +1,10 @@
-import java.io.File;
+
 
 /**
  *
  *  Главное приложение.
  */
 public class Filesystem {
-    public File logFile;
 
     /*
         инициализация файловой системы

@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 class UserInterface extends JFrame{
@@ -47,6 +49,8 @@ class UserInterface extends JFrame{
      */
     public void _menuItemClickListener() {
         _fileOpen.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         });
     }
@@ -96,5 +100,49 @@ class UserInterface extends JFrame{
         } catch (NullPointerException e) {
             System.out.println("-- Failed at menu bar creation --");
         }
+    }
+
+    /*
+        сообщение в лог
+     */
+    public String createLog(String filePath, int code) {
+        DateFormat time = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        String massage = "-- " + time.toString();
+        switch (code) {
+            case 0:
+                massage += "-- Успешное открытие файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 1:
+                massage += "-- Ошибка открытия файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 2:
+                massage += "-- Успешное закрытие файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 3:
+                massage += "-- Ошибка закрытия файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 4:
+                massage += "-- Успешное сохрание файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 5:
+                massage += "-- Ошибка сохраниения файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            case 6:
+                massage += "-- Успешно отменено исзенение файла -- " + filePath + " --\n";
+                code = -1;
+                break;
+            default:
+                if (code != -1) {
+                    massage += "-- Прерываение работы файла -- " + filePath + " --\n";
+                }
+        }
+
+        return massage;
     }
 }
